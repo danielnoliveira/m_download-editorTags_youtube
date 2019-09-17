@@ -4,7 +4,7 @@ def recognize(musica):
     f = open('./'+musica,'rb')
     data = {
         'return': 'timecode,apple_music,deezer,spotify',
-        'api_token': '17880ecc5c93f751f9c7d939a9f16fef'
+        'api_token':'your_api_token'
     }
     result = requests.post('https://api.audd.io/', data=data,files=dict({'file':f}))
     # print(result.text)
