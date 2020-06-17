@@ -49,22 +49,22 @@ if __name__ == "__main__":
             url = input('Link do video:')
             os.system('./ytd.sh '+url)
             musicas = os.listdir('./')
-            for m in musicas:
-                if m.endswith('.mp3'):
-                    recognize(m)
+            #for m in musicas:
+                #if m.endswith('.mp3'):
+                    #recognize(m)
         elif op == 2:
             url = input('Link da playlist:')
             itens = list(map(str,input('Itends da playlist(num1 num2 num3 ...)').split()))
             os.system('./ytd-2.sh '+url+' '+','.join(itens))
             musicas = os.listdir('./')
-            for m in musicas:
-                if m.endswith('.mp3'):
-                    recognize(m)
+            #for m in musicas:
+                #if m.endswith('.mp3'):
+                    #recognize(m)
         elif op == 3:
             musicas = os.listdir('./')
-            for m in musicas:
-                if m.endswith('.mp3'):
-                    recognize(m)
+            #for m in musicas:
+                #if m.endswith('.mp3'):
+                    #recognize(m)
         else:
             print('Script encerrando...')
             print('Script encerrado!!')
