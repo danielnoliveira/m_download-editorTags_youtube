@@ -1,5 +1,5 @@
 import os,json,requests,eyed3
-
+URL_MUSICTOEDIT ='./../../Music/musicDontEdited/'
 def recognize(musica):
     f = open('./'+musica,'rb')
     data = {
@@ -25,10 +25,17 @@ def recognize(musica):
         audiofile.tag.title = data['result']['title']
         print(data['result']['title'],' done')
         audiofile.tag.save()
-        os.rename('./'+musica,'../'+data['result']['title'].replace('/','')+'.mp3')
+        
     else:
         # print('data['error']')
         print(musica+' fail')
+def editMusic(musica):
+    audiofile = eyed3.load(URL_MUSICTOEDIT+musica)
+    audiofile.tag.artist = input("Artist:")
+    audiofile.tag.album = input("Album:")
+    audiofile.tag.title = input("Title:")
+    audiofile.tag.save()
+    os.rename(URL_MUSICTOEDIT+musica,URL_MUSICTOEDIT+'../'+audiofile.tag.title+'.mp3')
 if __name__ == "__main__":
     print('Bem vindo(a) à MusicDEapp(D="Download",E="Editor")')
     print('Informações básicas:')
@@ -47,22 +54,30 @@ if __name__ == "__main__":
         op = int(input('Opção desejada:'))
         if op == 1:
             url = input('Link do video:')
-            os.system('./ytd.sh '+url)
-            musicas = os.listdir('./')
+            os.system('bash ytd.sh '+url)
+            #musicas = os.listdir('./')
             #for m in musicas:
                 #if m.endswith('.mp3'):
                     #recognize(m)
         elif op == 2:
             url = input('Link da playlist:')
-            itens = list(map(str,input('Itends da playlist(num1 num2 num3 ...)').split()))
-            os.system('./ytd-2.sh '+url+' '+','.join(itens))
-            musicas = os.listdir('./')
+            itens = list(map(str,input('Itens da playlist(num1 num2 num3 ...)').split()))
+            os.system('bash ytd-2.sh '+url+' '+','.join(itens))
+            #musicas = os.listdir('./')
             #for m in musicas:
                 #if m.endswith('.mp3'):
                     #recognize(m)
         elif op == 3:
-            musicas = os.listdir('./')
-            #for m in musicas:
+            
+            while True:
+                musicas = os.listdir(URL_MUSICTOEDIT)
+                for j,m in enumerate(musicas):
+                    print(str(j)+'-'+m)
+                opm = int(input("Musica desejada para editar:"))
+                if opm<len(musicas) and opm>=0:
+                    editMusic(musicas[opm])
+                else:
+                    print("index invalido")
                 #if m.endswith('.mp3'):
                     #recognize(m)
         else:
