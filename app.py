@@ -78,6 +78,8 @@ if __name__ == "__main__":
                     editMusic(musicas[opm])
                 else:
                     print("index invalido")
+                if len(mmusicas)==0:
+                    break
                 #if m.endswith('.mp3'):
                     #recognize(m)
         else:
