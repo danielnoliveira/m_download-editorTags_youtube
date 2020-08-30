@@ -1,4 +1,4 @@
-import os,json,requests,eyed3
+import os,json,requests,eyed3,readline
 URL_MUSICTOEDIT ='./../../Music/musicDontEdited/'
 def recognize(musica):
     f = open('./'+musica,'rb')
@@ -29,6 +29,12 @@ def recognize(musica):
     else:
         # print('data['error']')
         print(musica+' fail')
+def rlinput(prompt, prefill=''):
+  readline.set_startup_hook(lambda: readline.insert_text(prefill))
+  try:
+      return input(prompt)  # or raw_input in Python 2
+  finally:
+      readline.set_startup_hook()
 def editMusic(musica):
     audiofile = eyed3.load(URL_MUSICTOEDIT+musica)
     audiofile.tag.artist = input("Artist:")
@@ -68,16 +74,18 @@ if __name__ == "__main__":
                 #if m.endswith('.mp3'):
                     #recognize(m)
         elif op == 3:
+            mask = input("Informe uma mascara para uso se quiser:")
             
             while True:
                 musicas = os.listdir(URL_MUSICTOEDIT)
                 for j,m in enumerate(musicas):
                     print(str(j)+'-'+m)
-                opm = int(input("Musica desejada para editar:"))
+                opm = int(input("Musica desejada para editar(ou valor fora do range para voltar ao menu):"))
                 if opm<len(musicas) and opm>=0:
                     editMusic(musicas[opm])
                 else:
-                    print("index invalido")
+                    print("Voltando ao menu....")
+                    break
                 if len(mmusicas)==0:
                     break
                 #if m.endswith('.mp3'):
